@@ -76,7 +76,7 @@ def get_message_ids_by_query(query_string):
     """
     service = get_service()
     message_results = service.users().messages().list(userId='me', q=query_string).execute()
-    print("message_results: {}".format(message_results))
+    # print("message_results: {}".format(message_results))
     if(message_results['resultSizeEstimate'] == 0):
         return []
     return message_results['messages'] if message_results['messages'] is not None else []
