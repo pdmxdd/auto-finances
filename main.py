@@ -1,5 +1,6 @@
 from __future__ import print_function
 import os.path
+import base64
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
@@ -89,7 +90,15 @@ def get_message(message_id):
     message = service.users().messages().get(userId='me', id=message_id).execute()
     return message
 
+def decode_message_part(message_part):
+    """
+    Returns a string representation of a decoded email message part.
+    """
+    return base64.urlsafe_b64decode(message_part['body']['data']).decode().strip()
+
 if __name__ == '__main__':
     # labels_dict = get_labels_dict()
     message_ids = get_message_ids_by_query('from:"chase" subject:"Your Single Transaction Alert from Chase" label:"INBOX" label:"UNREAD"')
-    print("message: {}".format(get_message(message_ids[0]['id'])))
+    example_message = get_message(message_ids[0]['id'])
+    # print("example_message: {}".format(example_message))
+    print("decoded message: {}".format(decode_message_part(example_message['payload'])))
