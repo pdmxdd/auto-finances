@@ -70,14 +70,18 @@ def old_main():
         for label in labels:
             print(label['name'])
 
-
-    
+def get_message_ids_by_query(query_string):
+    """
+    Returns a list of message ids that match a given query string.
+    """
+    service = get_service()
+    message_results = service.users().messages().list(userId='me', q=query_string).execute()
+    print("message_results: {}".format(message_results))
+    if(message_results['resultSizeEstimate'] == 0):
+        return []
+    return message_results['messages'] if message_results['messages'] is not None else []
 
 if __name__ == '__main__':
-    # old_main()
-    labels_dict = get_labels_dict()
-    print("label INBOX id: {}".format(labels_dict["INBOX"]))
-    print("label UNREAD id: {}".format(labels_dict["UNREAD"]))
-    print("label Auto-Finances/Recorded id: {}".format(labels_dict["Auto-Finances/Recorded"]))
-    print("label Auto-Finances/Transaction/Discover id: {}".format(labels_dict["Auto-Finances/Transaction/Discover"]))
-    print("label Auto-Finances/Transaction/Chase id: {}".format(labels_dict["Auto-Finances/Transaction/Chase"]))
+    # labels_dict = get_labels_dict()
+    message_ids = get_message_ids_by_query('from:"chase" subject:"Your Single Transaction Alert from Chase" label:"INBOX" label:"UNREAD"')
+    print("message_ids: {}".format(message_ids))
