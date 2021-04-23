@@ -96,9 +96,23 @@ def decode_message_part(message_part):
     """
     return base64.urlsafe_b64decode(message_part['body']['data']).decode().strip()
 
+def trim_headers(all_headers, relevant_headers=["From", "To", "Subject", "Date"]):
+    """
+    Returns a trimmed dictionary representation of an emails headers.
+    """
+    data = {}
+    # print("all headers: {}".format(headers))
+    for header in all_headers:
+        if header['name'] in relevant_headers:
+            data[header['name']] = header['value']
+
+    return data
+
 if __name__ == '__main__':
     # labels_dict = get_labels_dict()
     message_ids = get_message_ids_by_query('from:"chase" subject:"Your Single Transaction Alert from Chase" label:"INBOX" label:"UNREAD"')
     example_message = get_message(message_ids[0]['id'])
     # print("example_message: {}".format(example_message))
-    print("decoded message: {}".format(decode_message_part(example_message['payload'])))
+    # print("decoded message: {}".format(decode_message_part(example_message['payload'])))
+    relevant_headers = trim_headers(example_message['payload']['headers'])
+    print("relevant headers: {}".format(relevant_headers))
