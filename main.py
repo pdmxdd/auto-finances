@@ -2,19 +2,8 @@ from __future__ import print_function
 import base64
 
 from gmail_service import get_service
+from gmail_labels import get_labels_dict
 
-def get_labels_dict():
-    """
-    Returns a dictionary of Gmail labels key: name value: id.
-    """
-    service = get_service()
-    labels = service.users().labels().list(userId="me").execute()
-    # print("labels: {}".format(labels))
-    labels_dict = {}
-    for label in labels["labels"]:
-        labels_dict[label["name"]] = label["id"]
-    # print("labels_dict: {}".format(labels_dict))
-    return labels_dict
 
 def get_message_ids_by_query(query_string):
     """
@@ -54,7 +43,8 @@ def trim_headers(all_headers, relevant_headers=["From", "To", "Subject", "Date"]
     return data
 
 if __name__ == '__main__':
-    # labels_dict = get_labels_dict()
+    labels_dict = get_labels_dict()
+    # print("labels dict: {}".format(labels_dict))
     message_ids = get_message_ids_by_query('from:"chase" subject:"Your Single Transaction Alert from Chase" label:"INBOX" label:"UNREAD"')
     example_message = get_message(message_ids[0]['id'])
     # print("example_message: {}".format(example_message))
