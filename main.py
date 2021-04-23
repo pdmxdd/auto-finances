@@ -81,7 +81,15 @@ def get_message_ids_by_query(query_string):
         return []
     return message_results['messages'] if message_results['messages'] is not None else []
 
+def get_message(message_id):
+    """
+    Returns a dictionary representation of a message from the Gmail API.
+    """
+    service = get_service()
+    message = service.users().messages().get(userId='me', id=message_id).execute()
+    return message
+
 if __name__ == '__main__':
     # labels_dict = get_labels_dict()
     message_ids = get_message_ids_by_query('from:"chase" subject:"Your Single Transaction Alert from Chase" label:"INBOX" label:"UNREAD"')
-    print("message_ids: {}".format(message_ids))
+    print("message: {}".format(get_message(message_ids[0]['id'])))
