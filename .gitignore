@@ -1,1 +1,4 @@
 env_auto_finances/
+.env
+credentials.json
+token.json
