@@ -16,23 +16,6 @@ def get_labels_dict():
     # print("labels_dict: {}".format(labels_dict))
     return labels_dict
 
-def old_main():
-    """
-    Shows basic usage of the Gmail API.
-    Lists the user's Gmail labels.
-    """
-    service = get_service()
-
-    results = service.users().labels().list(userId='me').execute()
-    labels = results.get('labels', [])
-
-    if not labels:
-        print('No labels found.')
-    else:
-        print('Labels:')
-        for label in labels:
-            print(label['name'])
-
 def get_message_ids_by_query(query_string):
     """
     Returns a list of message ids that match a given query string.
