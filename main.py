@@ -45,8 +45,13 @@ def get_labels_dict():
     Returns a dictionary of Gmail labels key: name value: id.
     """
     service = get_service()
-    results = service.users().labels().list(userId='me').execute()
-    print("results: {}".format(results))
+    labels = service.users().labels().list(userId="me").execute()
+    # print("labels: {}".format(labels))
+    labels_dict = {}
+    for label in labels["labels"]:
+        labels_dict[label["name"]] = label["id"]
+    # print("labels_dict: {}".format(labels_dict))
+    return labels_dict
 
 def old_main():
     """
@@ -69,4 +74,10 @@ def old_main():
     
 
 if __name__ == '__main__':
-    old_main()
+    # old_main()
+    labels_dict = get_labels_dict()
+    print("label INBOX id: {}".format(labels_dict["INBOX"]))
+    print("label UNREAD id: {}".format(labels_dict["UNREAD"]))
+    print("label Auto-Finances/Recorded id: {}".format(labels_dict["Auto-Finances/Recorded"]))
+    print("label Auto-Finances/Transaction/Discover id: {}".format(labels_dict["Auto-Finances/Transaction/Discover"]))
+    print("label Auto-Finances/Transaction/Chase id: {}".format(labels_dict["Auto-Finances/Transaction/Chase"]))
