@@ -8,9 +8,9 @@ from google.oauth2.credentials import Credentials
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
 
-def main():
-    """Shows basic usage of the Gmail API.
-    Lists the user's Gmail labels.
+def get_credentials():
+    """
+    Returns the credentials in token.json. If it doesn't exist, or is not valid it will intiate the OAuth 2.0 flow to get a new token.json using the local credentials.json.
     """
     creds = None
     # The file token.json stores the user's access and refresh tokens, and is
@@ -30,9 +30,31 @@ def main():
         with open('token.json', 'w') as token:
             token.write(creds.to_json())
 
-    service = build('gmail', 'v1', credentials=creds)
+    return creds
 
-    # Call the Gmail API
+def get_service():
+    """
+    Returns the Gmail API service of the user. the service is the entrypoint to interfacing with the Gmail API.
+    """
+    service = build('gmail', 'v1', credentials=get_credentials())
+
+    return service
+
+def get_labels_dict():
+    """
+    Returns a dictionary of Gmail labels key: name value: id.
+    """
+    service = get_service()
+    results = service.users().labels().list(userId='me').execute()
+    print("results: {}".format(results))
+
+def old_main():
+    """
+    Shows basic usage of the Gmail API.
+    Lists the user's Gmail labels.
+    """
+    service = get_service()
+
     results = service.users().labels().list(userId='me').execute()
     labels = results.get('labels', [])
 
@@ -43,5 +65,8 @@ def main():
         for label in labels:
             print(label['name'])
 
+
+    
+
 if __name__ == '__main__':
-    main()
+    old_main()
