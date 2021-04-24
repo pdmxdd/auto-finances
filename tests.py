@@ -52,6 +52,13 @@ class MessageTests(unittest.TestCase):
         self.assertIn("id", message_ids[0])
         self.assertIn("threadId", message_ids[0])
 
+    def test_get_message_id_by_query_subject(self):
+        query_string = 'from:"paul@paulmatthews.dev" subject:"Test Subject"'
+        message_ids = get_message_ids_by_query(query_string)
+        self.assertGreater(len(message_ids), 0)
+        self.assertIn("id", message_ids[0])
+        self.assertIn("threadId", message_ids[0])
+
     # TODO: get_message tests, decode_message_part tests, trim_headers tests
 
 
