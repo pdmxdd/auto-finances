@@ -6,16 +6,19 @@ import unittest
 class LabelTests(unittest.TestCase):
 
     service = None
+    labels_dict = None
 
-    # REFACTOR: change setUp & tearDown to setUpClass & tearDownClass so the service is only setup once per class instead of every function
-    def setUp(self):
-        self.service = get_service()
+    @classmethod
+    def setUpClass(cls):
+        cls.service = get_service()
+        cls.labels_dict = get_labels_dict(cls.service)
 
-    def tearDown(self):
-        self.service.close()
+    @classmethod
+    def tearDownClass(cls):
+        cls.service.close()
 
     def test_get_labels_dict_existing_keys(self):
-        labels_dict_keys = get_labels_dict(self.service).keys()
+        labels_dict_keys = self.labels_dict.keys()
         self.assertIn("INBOX", labels_dict_keys)
         self.assertIn("UNREAD", labels_dict_keys)
         self.assertIn("Auto-Finances/Recorded", labels_dict_keys)
@@ -23,7 +26,7 @@ class LabelTests(unittest.TestCase):
         self.assertIn("Auto-Finances/Transaction/Discover", labels_dict_keys)
 
     def test_get_labels_dict_ids(self):
-        labels_dict = get_labels_dict(self.service)
+        labels_dict = self.labels_dict
         self.assertEqual(labels_dict["INBOX"], "INBOX")
         self.assertEqual(labels_dict["UNREAD"], "UNREAD")
         self.assertEqual(labels_dict["Auto-Finances/Recorded"], "Label_2163748349047499113")
