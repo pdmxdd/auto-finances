@@ -33,7 +33,6 @@ class MessageTests(unittest.TestCase):
 
     # for testing purposes I sent an email to paul@paulmatthews.dev from paul@paulmatthews.dev with subject:"Test Subject" body:"test body" label:"Auto-Finances/Transaction/Discover" label:"Auto-Finances/Recorded" label:"Auto-Finances/Transaction/Chase" label:"testing"
 
-    # after refactoring lables to take a service instead of creating a new one in function it cut down the number of "ResourceWarnings" around SSLSockets from 6 to 2. defintely on the right path
     service = None
 
     def setUp(self):
