@@ -1,3 +1,4 @@
+from gmail_service import get_service
 from gmail_labels import get_labels_dict
 from gmail_messages import get_message_ids_by_query, get_message, trim_headers, decode_message_part
 
@@ -5,7 +6,8 @@ from gmail_messages import get_message_ids_by_query, get_message, trim_headers, 
 
 
 if __name__ == '__main__':
-    labels_dict = get_labels_dict()
+    service = get_service()
+    labels_dict = get_labels_dict(service)
     print("labels dict: {}".format(labels_dict))
     message_ids = get_message_ids_by_query('from:"chase" subject:"Your Single Transaction Alert from Chase" label:"INBOX" label:"UNREAD"')
     example_message = get_message(message_ids[0]['id'])

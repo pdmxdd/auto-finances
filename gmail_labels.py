@@ -1,10 +1,10 @@
 from gmail_service import get_service
 
-def get_labels_dict():
+def get_labels_dict(service):
     """
     Returns a dictionary of Gmail labels key: name value: id.
     """
-    service = get_service()
+    # service = get_service()
     labels = service.users().labels().list(userId="me").execute()
     # print("labels: {}".format(labels))
     labels_dict = {}
