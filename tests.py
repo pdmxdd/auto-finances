@@ -7,6 +7,7 @@ class LabelTests(unittest.TestCase):
 
     service = None
 
+    # REFACTOR: change setUp & tearDown to setUpClass & tearDownClass so the service is only setup once per class instead of every function
     def setUp(self):
         self.service = get_service()
 
@@ -35,6 +36,7 @@ class GetMessageIdTests(unittest.TestCase):
 
     service = None
 
+    # REFACTOR: change setUp & tearDown to setUpClass & tearDownClass so the service is only setup once per class instead of every function
     def setUp(self):
         self.service = get_service()
 
