@@ -163,6 +163,11 @@ class getMessageTests(unittest.TestCase):
         self.assertEqual("paul@paulmatthews.dev", test_trim_headers["To"])
         self.assertEqual("Paul Matthews <paul@paulmatthews.dev>", test_trim_headers["From"])
         self.assertEqual("Test Subject", test_trim_headers["Subject"])
+        # trim_headers should remove the following headers:
+        self.assertNotIn("MIME-Version", header_keys)
+        self.assertNotIn("Message-ID", header_keys)
+        self.assertNotIn("Contet-Type", header_keys)
+        
 
     def test_decode_message_part_zero(self):
         part = self.test_message['payload']['parts'][0]
