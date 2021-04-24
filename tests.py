@@ -152,6 +152,9 @@ class getMessageTests(unittest.TestCase):
         self.assertIn("From", headers_keys)
         self.assertIn("Subject", headers_keys)
         self.assertIn("Date", headers_keys)
+        self.assertIn("MIME-Version", headers_keys)
+        self.assertIn("Message-ID", headers_keys)
+        self.assertIn("Content-Type", headers_keys)
     
     def test_trim_headers(self):
         test_trim_headers = trim_headers(self.test_message['payload']['headers'])
@@ -166,7 +169,7 @@ class getMessageTests(unittest.TestCase):
         # trim_headers should remove the following headers:
         self.assertNotIn("MIME-Version", header_keys)
         self.assertNotIn("Message-ID", header_keys)
-        self.assertNotIn("Contet-Type", header_keys)
+        self.assertNotIn("Content-Type", header_keys)
         
 
     def test_decode_message_part_zero(self):
