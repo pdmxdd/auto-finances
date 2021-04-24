@@ -39,7 +39,7 @@ class GetMessageIdTests(unittest.TestCase):
 
     service = None
 
-    # REFACTOR: change setUp & tearDown to setUpClass & tearDownClass so the service is only setup once per class instead of every function
+    # REFACTOR: change setUp & tearDown to setUpClass & tearDownClass so the service is only setup once per class instead of every function -> this is not a good idea because service.close() will not be called and new requests will be made before the previous one has closed and the socket will be open giving me those nasty warning messages
     def setUp(self):
         self.service = get_service()
 
