@@ -78,8 +78,6 @@ class GetMessageIdTests(unittest.TestCase):
         self.assertIn("id", message_ids[0])
         self.assertIn("threadId", message_ids[0])
 
-    # TODO: get_message tests, decode_message_part tests, trim_headers tests
-
 class getMessageTests(unittest.TestCase):
 
     service = None
