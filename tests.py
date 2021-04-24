@@ -172,7 +172,6 @@ class getMessageTests(unittest.TestCase):
     def test_decode_message_part_one(self):
         part = self.test_message['payload']['parts'][1]
         decoded_message = decode_message_part(part)
-        print("decoded_message: {}".format(decoded_message))
         self.assertEqual(decoded_message, '<div dir="ltr">test body<br></div>')
 
 if __name__ == "__main__":
