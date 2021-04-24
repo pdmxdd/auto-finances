@@ -77,10 +77,6 @@ class MessageTests(unittest.TestCase):
         self.assertIn("id", message_ids[0])
         self.assertIn("threadId", message_ids[0])
 
-    # FIX: when running tests I am getting the following error: "...../home/paul/personal/coding/auto-finances/env_auto_finances/lib/python3.8/site-packages/six.py:589: ResourceWarning: unclosed <ssl.SSLSocket fd=3, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('192.168.1.9', 52650), raddr=('172.217.4.202', 443)> return iter(d.items(**kw))"
-
-    # pretty straight forward an SSLSocket is not being closed, probably do to the nature that for every single test I have a new service being created and it's not gracefully closing before the next test creates a new service. I need to refactor so that my tests only use one service per class is what I'm thinking
-
     # TODO: get_message tests, decode_message_part tests, trim_headers tests
 
 
