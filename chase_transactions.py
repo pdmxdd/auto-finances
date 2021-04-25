@@ -52,7 +52,14 @@ To see all of the Alerts available to you, or to manage your Alert
 settings, please log on to www.chase.com.
 '''
 
+import re
+
 def extract_condensed_message(string_full_message):
     condensed_message_parts = string_full_message.split(", as specified in your Alert settings.\r\n")
     extracted_condensed_message = condensed_message_parts[1].split('.\r\n')[0]
     return extracted_condensed_message.replace("\r\n", " ")
+
+def extract_vendor(condensed_message):
+    vendor = condensed_message.split(" at ")[1].split(" has ")[0]
+    return vendor
+    

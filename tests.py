@@ -1,4 +1,4 @@
-from chase_transactions import extract_condensed_message
+from chase_transactions import extract_condensed_message, extract_vendor
 from gmail_service import get_service
 from gmail_messages import decode_message_part, get_message_ids_by_query, get_message, trim_headers
 from gmail_labels import get_labels_dict
@@ -210,6 +210,13 @@ class ChaseTransactionsTests(unittest.TestCase):
         condensed_message_2 = extract_condensed_message(decode_message_part(self.test_message_2['payload']['parts'][0]))
         self.assertEqual('A charge of ($USD) ', condensed_message_2[0:19])
         self.assertEqual('A charge of ($USD) 12.47 at CHICK-FIL-A #03077 has been authorized on Apr 23, 2021 at 12:58 PM ET', condensed_message_2)
+
+    def testExtractVendor(self):
+        condensed_message_1 = extract_condensed_message(decode_message_part(self.test_message_1['payload']['parts'][0]))
+        self.assertEqual("WALGREENS #9436", extract_vendor(condensed_message_1))
+
+        condensed_message_2 = extract_condensed_message(decode_message_part(self.test_message_2['payload']['parts'][0]))
+        self.assertEqual("CHICK-FIL-A #03077", extract_vendor(condensed_message_2))
 
 if __name__ == "__main__":
     unittest.main()
