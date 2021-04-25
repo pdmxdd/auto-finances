@@ -1,4 +1,4 @@
-from chase_transactions import extract_amount, extract_condensed_message, extract_vendor
+from chase_transactions import extract_amount, extract_authorized_time, extract_condensed_message, extract_vendor
 from gmail_service import get_service
 from gmail_messages import decode_message_part, get_message_ids_by_query, get_message, trim_headers
 from gmail_labels import get_labels_dict
@@ -224,6 +224,13 @@ class ChaseTransactionsTests(unittest.TestCase):
 
         condensed_message_2 = extract_condensed_message(decode_message_part(self.test_message_2['payload']['parts'][0]))
         self.assertEqual(12.47, extract_amount(condensed_message_2))
+
+    def testExtractAuthorizedTime(self):
+        condensed_message_1 = extract_condensed_message(decode_message_part(self.test_message_1['payload']['parts'][0]))
+        self.assertEqual("Apr 23, 2021 at 7:50 PM ET", extract_authorized_time(condensed_message_1))
+
+        condensed_message_2 = extract_condensed_message(decode_message_part(self.test_message_2['payload']['parts'][0]))
+        self.assertEqual("Apr 23, 2021 at 12:58 PM ET", extract_authorized_time(condensed_message_2))
 
 if __name__ == "__main__":
     unittest.main()

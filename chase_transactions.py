@@ -65,3 +65,6 @@ def extract_vendor(condensed_message):
     
 def extract_amount(condensed_message):
     return float(re.search('\d+[.]\d+', condensed_message).group().strip())
+
+def extract_authorized_time(condensed_message):
+    return condensed_message.split("has been authorized on ")[1]
