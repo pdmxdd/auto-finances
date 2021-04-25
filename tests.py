@@ -1,3 +1,4 @@
+from chase_transactions import extract_condensed_message
 from gmail_service import get_service
 from gmail_messages import decode_message_part, get_message_ids_by_query, get_message, trim_headers
 from gmail_labels import get_labels_dict
@@ -80,7 +81,7 @@ class GetMessageIdTests(unittest.TestCase):
         self.assertIn("id", message_ids[0])
         self.assertIn("threadId", message_ids[0])
 
-class getMessageTests(unittest.TestCase):
+class GetMessageTests(unittest.TestCase):
 
     service = None
     query_string = None
@@ -181,6 +182,34 @@ class getMessageTests(unittest.TestCase):
         part = self.test_message['payload']['parts'][1]
         decoded_message = decode_message_part(part)
         self.assertEqual(decoded_message, '<div dir="ltr">test body<br></div>')
+
+class ChaseTransactionsTests(unittest.TestCase):
+
+    service = None
+    test_message_1 = None
+    test_message_2 = None
+    @classmethod
+    def setUpClass(cls):
+        cls.service = get_service()
+        test_message_ids = get_message_ids_by_query('from:"paul@paulmatthews.dev" subject:"Your Single Transaction Alert From Chase"', cls.service)
+        cls.test_message_1 = get_message(test_message_ids[0]['id'], cls.service)
+        cls.test_message_2 = get_message(test_message_ids[1]['id'], cls.service)
+        cls.service.close()
+
+    def setUp(self):
+        self.service = get_service()
+
+    def tearDown(self):
+        self.service.close()
+
+    def testExtractCondensedMessage(self):
+        condensed_message_1 = extract_condensed_message(decode_message_part(self.test_message_1['payload']['parts'][0]))
+        self.assertEqual('A charge of ($USD) ', condensed_message_1[0:19])
+        self.assertEqual('A charge of ($USD) 51.28 at WALGREENS #9436 has been authorized on Apr 23, 2021 at 7:50 PM ET', condensed_message_1)
+
+        condensed_message_2 = extract_condensed_message(decode_message_part(self.test_message_2['payload']['parts'][0]))
+        self.assertEqual('A charge of ($USD) ', condensed_message_2[0:19])
+        self.assertEqual('A charge of ($USD) 12.47 at CHICK-FIL-A #03077 has been authorized on Apr 23, 2021 at 12:58 PM ET', condensed_message_2)
 
 if __name__ == "__main__":
     unittest.main()
