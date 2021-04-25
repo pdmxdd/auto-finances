@@ -1,4 +1,4 @@
-from chase_transactions import extract_amount, extract_authorized_time, extract_condensed_message, extract_vendor
+from chase_transactions import chase_message_to_dict, extract_amount, extract_authorized_time, extract_condensed_message, extract_vendor
 from gmail_service import get_service
 from gmail_messages import decode_message_part, get_message_ids_by_query, get_message, trim_headers
 from gmail_labels import get_labels_dict
@@ -231,6 +231,38 @@ class ChaseTransactionsTests(unittest.TestCase):
 
         condensed_message_2 = extract_condensed_message(decode_message_part(self.test_message_2['payload']['parts'][0]))
         self.assertEqual("Apr 23, 2021 at 12:58 PM ET", extract_authorized_time(condensed_message_2))
+
+    def testChaseMessageToDict(self):
+        self.maxDiff = None
+        expected_dict_1 = {
+            "To": "paul@paulmatthews.dev",
+            "From": "Paul Matthews <paul@paulmatthews.dev>",
+            "Date": "Sat, 24 Apr 2021 23:39:21 -0500",
+            "Subject": "Fwd: Your Single Transaction Alert from Chase",
+            "authorized_time": "Apr 23, 2021 at 7:50 PM ET",
+            "vendor": "WALGREENS #9436",
+            "amount": 51.28,
+            "gmail_message_id": "17907532dd229b2a",
+            "gmail_thread_id": "178ffab904b01c52",
+            "account": "chase_credit",
+            "condensed_message": "A charge of ($USD) 51.28 at WALGREENS #9436 has been authorized on Apr 23, 2021 at 7:50 PM ET",
+        }
+        self.assertDictEqual(expected_dict_1, chase_message_to_dict(self.test_message_1))
+
+        expected_dict_2 = {
+            "To": "paul@paulmatthews.dev",
+            "From": "Paul Matthews <paul@paulmatthews.dev>",
+            "Date": "Sat, 24 Apr 2021 23:39:05 -0500",
+            "Subject": "Fwd: Your Single Transaction Alert from Chase",
+            "authorized_time": "Apr 23, 2021 at 12:58 PM ET",
+            "vendor": "CHICK-FIL-A #03077",
+            "amount": 12.47,
+            "gmail_message_id": "1790752ef8865f12",
+            "gmail_thread_id": "178ffab904b01c52",
+            "account": "chase_credit",
+            "condensed_message": "A charge of ($USD) 12.47 at CHICK-FIL-A #03077 has been authorized on Apr 23, 2021 at 12:58 PM ET",
+        }      
+        self.assertDictEqual(expected_dict_2, chase_message_to_dict(self.test_message_2))  
 
 if __name__ == "__main__":
     unittest.main()
