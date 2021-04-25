@@ -220,10 +220,10 @@ class ChaseTransactionsTests(unittest.TestCase):
 
     def testExtractAmount(self):
         condensed_message_1 = extract_condensed_message(decode_message_part(self.test_message_1['payload']['parts'][0]))
-        self.assertEqual("51.28", extract_amount(condensed_message_1))
+        self.assertEqual(51.28, extract_amount(condensed_message_1))
 
         condensed_message_2 = extract_condensed_message(decode_message_part(self.test_message_2['payload']['parts'][0]))
-        self.assertEqual("12.47", extract_amount(condensed_message_2))
+        self.assertEqual(12.47, extract_amount(condensed_message_2))
 
 if __name__ == "__main__":
     unittest.main()

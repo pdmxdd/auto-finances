@@ -64,4 +64,4 @@ def extract_vendor(condensed_message):
     return vendor
     
 def extract_amount(condensed_message):
-    return re.search('\d+[.]\d+', condensed_message).group().strip()
+    return float(re.search('\d+[.]\d+', condensed_message).group().strip())
