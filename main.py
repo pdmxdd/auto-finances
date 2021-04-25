@@ -1,6 +1,7 @@
+from chase_transactions import chase_message_to_dict
+from gmail_messages import get_message, get_message_ids_by_query
 from gmail_service import get_service
 from gmail_labels import get_labels_dict
-from gmail_messages import get_message_ids_by_query, get_message, trim_headers, decode_message_part
 
 
 
@@ -8,10 +9,8 @@ from gmail_messages import get_message_ids_by_query, get_message, trim_headers, 
 if __name__ == '__main__':
     service = get_service()
     labels_dict = get_labels_dict(service)
-    print("labels dict: {}".format(labels_dict))
-    message_ids = get_message_ids_by_query('from:"chase" subject:"Your Single Transaction Alert from Chase" label:"INBOX" label:"UNREAD"', service)
-    example_message = get_message(message_ids[0]['id'], service)
-    print("example_message: {}".format(example_message))
-    print("decoded message: {}".format(decode_message_part(example_message['payload'])))
-    relevant_headers = trim_headers(example_message['payload']['headers'])
-    print("relevant headers: {}".format(relevant_headers))
+    
+    chase_messages = [get_message(message_id['id'], service) for message_id in get_message_ids_by_query('from:"paul@paulmatthews.dev" subject:"Your Single Transaction Alert From Chase"', service)]
+
+    for message in chase_messages:
+        print("chase_message_dict: {}".format(chase_message_to_dict(message)))
