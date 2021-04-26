@@ -3,3 +3,4 @@ env_auto_finances/
 credentials.json
 token.json
 __pycache__/
+*.csv
