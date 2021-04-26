@@ -313,7 +313,7 @@ class WriteTransactionTests(unittest.TestCase):
     def tearDownClass(cls):
         cls.service.close()
 
-    def setUp(self):
+    def tearDown(self):
         delete_file(self.test_csv_file)
 
     def test_create_csv_and_write_dict_list(self):
