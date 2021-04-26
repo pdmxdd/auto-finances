@@ -1,5 +1,5 @@
 import os
-from csv_utils import create_csv_and_write_dict_list, delete_file, read_csv
+from csv_utils import write_dict_list, delete_file, read_csv
 from chase_transactions import chase_message_to_dict, extract_amount, extract_authorized_time, extract_condensed_message, extract_vendor
 from gmail_service import get_service
 from gmail_messages import decode_message_part, get_message_ids_by_query, get_message, trim_headers
@@ -316,21 +316,33 @@ class WriteTransactionTests(unittest.TestCase):
     def tearDown(self):
         delete_file(self.test_csv_file)
 
-    def test_create_csv_and_write_dict_list(self):
+    def test_write_dict_list(self):
         self.assertFalse(os.path.exists(self.test_csv_file))
 
-        create_csv_and_write_dict_list(self.test_csv_file, [self.test_message_dict_1])
+        write_dict_list(self.test_csv_file, [self.test_message_dict_1])
         self.assertTrue(os.path.exists(self.test_csv_file))
         self.assertTrue(os.path.isfile(self.test_csv_file))
 
     def test_read_csv(self):
         self.assertFalse(os.path.exists(self.test_csv_file))
 
-        create_csv_and_write_dict_list(self.test_csv_file, [self.test_message_dict_1])
+        write_dict_list(self.test_csv_file, [self.test_message_dict_1])
 
         data = read_csv(self.test_csv_file)
         self.assertDictEqual(self.expected_dict_1, data[0])
 
+    def test_write_row_to_csv(self):
+        self.assertFalse(os.path.exists(self.test_csv_file))
+
+        write_dict_list(self.test_csv_file, [self.test_message_dict_1])
+
+        write_dict_list(self.test_csv_file, [self.expected_dict_2])
+
+        self.maxDiff = None
+
+        data = read_csv(self.test_csv_file)
+        self.assertDictEqual(self.expected_dict_2, data[1])
+        self.assertDictEqual(self.expected_dict_1, data[0])
 
 if __name__ == "__main__":
     unittest.main()
