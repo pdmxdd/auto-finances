@@ -15,6 +15,4 @@ if __name__ == '__main__':
     for message in chase_messages:
         print("chase_message_dict: {}".format(chase_message_to_dict(message)))
 
-        # TODO: write chase_dict to CSV
-
         # TODO: update chase message labels (remove INBOX & UNREAD; add Auto-Finances/Transaction/Chase & Auto-Finances/Recorded)
