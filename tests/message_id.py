@@ -1,5 +1,5 @@
 import unittest
-from gmail_service import get_service
+from gmail.service import get_service
 from gmail_messages import get_message_ids_by_query
 
 

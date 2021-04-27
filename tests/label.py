@@ -1,5 +1,5 @@
 from gmail_labels import get_labels_dict
-from gmail_service import get_service
+from gmail.service import get_service
 import unittest
 
 class LabelTests(unittest.TestCase):
