@@ -1,5 +1,5 @@
-from gmail_messages import decode_message_part, trim_headers
 import re
+from gmail_messages import decode_message_part, trim_headers
 
 def extract_condensed_message(string_full_message):
     condensed_message_parts = string_full_message.split(", as specified in your Alert settings.\r\n")

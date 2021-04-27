@@ -1,7 +1,7 @@
 # QUICKFIX: yoinked from another project I've worked on. It's messy, but will allow me to move forward quickly. will need to come back and find a better solution for working with CSVs, if I continue to go the flat-file route.
 
-from csv import DictReader, DictWriter
 import os
+from csv import DictReader, DictWriter
 
 transaction_write_list = [
     "gmail_message_id",

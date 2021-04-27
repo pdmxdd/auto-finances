@@ -35,6 +35,4 @@ def get_service():
     """
     Returns the Gmail API service of the user. the service is the entrypoint to interfacing with the Gmail API.
     """
-    service = build('gmail', 'v1', credentials=get_credentials())
-
-    return service
+    return build('gmail', 'v1', credentials=get_credentials())

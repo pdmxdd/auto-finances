@@ -1,4 +1,3 @@
-
 def get_labels_dict(service):
     """
     Returns a dictionary of Gmail labels key: name value: id.
