@@ -1,4 +1,4 @@
-from gmail_labels import get_labels_dict
+from gmail.labels import get_labels_dict
 from gmail.service import get_service
 import unittest
 

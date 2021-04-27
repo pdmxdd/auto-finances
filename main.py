@@ -2,7 +2,7 @@ from csv_utils import delete_file, write_dict_list
 from chase_transactions import chase_message_to_dict
 from gmail_messages import get_message, get_message_ids_by_query
 from gmail.service import get_service
-from gmail_labels import get_labels_dict
+from gmail.labels import get_labels_dict
 
 if __name__ == '__main__':
     service = get_service()
