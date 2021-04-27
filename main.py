@@ -1,4 +1,4 @@
-from csv_utils import delete_file, write_dict_list
+from utils.csv import delete_file, write_dict_list
 from transactions.chase import chase_message_to_dict
 from gmail.messages import get_message, get_message_ids_by_query
 from gmail.service import get_service
