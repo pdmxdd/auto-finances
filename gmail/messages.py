@@ -32,3 +32,9 @@ def trim_headers(all_headers, relevant_headers=["From", "To", "Subject", "Date"]
             data[header['name']] = header['value']
 
     return data
+
+def remove_labels_from_message(message_id, label_ids, service):
+    service.users().messages().modify(userId="me", id=message_id, body={"removeLabelIds": label_ids}).execute()
+
+def add_labels_to_message(message_id, label_ids, service):
+    service.users().messages().modify(userId="me", id=message_id, body={"addLabelIds": label_ids}).execute()
