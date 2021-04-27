@@ -17,4 +17,7 @@ if __name__ == '__main__':
 
     write_dict_list(csv_filepath, [chase_message_to_dict(message) for message in chase_messages])
 
-    # TODO: update chase message labels (remove INBOX & UNREAD; add Auto-Finances/Transaction/Chase & Auto-Finances/Recorded) -> after a message is recorded it needs to have labels added and removed. will need to chop up the list comprehensions
+    # for message in chase_messages: 
+    #   remove_labels_from_message(message['id], [labels_dict['INBOX'], labels_dict['UNREAD']], service)
+    #   add_labels_to_message(message['id], [labels_dict["Auto-Finances/Recorded"], labels_dict["Auto-Finances/Transaction/Chase"]], service)
+
