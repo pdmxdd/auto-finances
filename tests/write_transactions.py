@@ -1,7 +1,7 @@
 import unittest, os
 from gmail.service import get_service
 from gmail.messages import get_message_ids_by_query, get_message
-from chase_transactions import chase_message_to_dict
+from transactions.chase import chase_message_to_dict
 from csv_utils import delete_file, write_dict_list, read_csv
 
 class WriteTransactionTests(unittest.TestCase):

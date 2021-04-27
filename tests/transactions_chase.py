@@ -1,7 +1,7 @@
 import unittest
 from gmail.service import get_service
 from gmail.messages import get_message_ids_by_query, get_message, decode_message_part
-from chase_transactions import extract_amount, extract_authorized_time, extract_condensed_message, extract_vendor, chase_message_to_dict
+from transactions.chase import extract_amount, extract_authorized_time, extract_condensed_message, extract_vendor, chase_message_to_dict
 
 class ChaseTransactionsTests(unittest.TestCase):
 
