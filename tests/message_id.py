@@ -1,6 +1,6 @@
 import unittest
 from gmail.service import get_service
-from gmail_messages import get_message_ids_by_query
+from gmail.messages import get_message_ids_by_query
 
 
 class GetMessageIdTests(unittest.TestCase):

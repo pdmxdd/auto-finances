@@ -1,6 +1,6 @@
 import unittest
 from gmail.service import get_service
-from gmail_messages import get_message_ids_by_query, get_message, trim_headers, decode_message_part
+from gmail.messages import get_message_ids_by_query, get_message, trim_headers, decode_message_part
 from gmail.labels import get_labels_dict
 
 class GetMessageTests(unittest.TestCase):
