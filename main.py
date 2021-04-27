@@ -21,3 +21,4 @@ if __name__ == '__main__':
     #   remove_labels_from_message(message['id], [labels_dict['INBOX'], labels_dict['UNREAD']], service)
     #   add_labels_to_message(message['id], [labels_dict["Auto-Finances/Recorded"], labels_dict["Auto-Finances/Transaction/Chase"]], service)
 
+    # TODO: all of the pieces of the MVP exist. time to pull it all together and manually test it out
