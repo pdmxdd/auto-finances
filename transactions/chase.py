@@ -29,7 +29,13 @@ def chase_message_to_dict(message):
         chase_dict[rhk] = rhv
 
     # grab and decode the full message from the message payload
-    full_message = decode_message_part(message['payload']['parts'][0])
+
+    # TODO: test for the case of a message not having multiple parts and therefore the body that needs to be decoded is message['payload'] instead of message['payload']['parts'][0] -> this seems to be when the gmail API returns a response with multiple representations of the email, one in plaintext and another in HTML. We may be able to check the headers for the data format and predict if it will have parts or not.
+    full_message = None
+    if 'parts' in message['payload'].keys():
+        full_message = decode_message_part(message['payload']['parts'][0])
+    else:
+        full_message = decode_message_part(message['payload'])
     # chase_dict["full_message"] = decode_message_part(message['payload']['parts'][0])
 
     # extract condensed message from full message
