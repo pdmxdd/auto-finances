@@ -1,3 +1,4 @@
+from transactions.discover import discover_message_to_dict
 from utils.csv import write_dict_list
 from transactions.chase import chase_message_to_dict
 from gmail.messages import add_labels_to_message, get_message, get_message_ids_by_query, remove_labels_from_message
@@ -18,6 +19,16 @@ def scan_record_update_chase_transactions(service, csv_filepath, labels_dict):
         remove_labels_from_message(chase_message['id'], [labels_dict['INBOX'], labels_dict['UNREAD']], service)
         print("INBOX & UNREAD labels removed")
 
+def scan_record_update_discover_transactions(service, csv_filepath, labels_dict):
+    DISCOVER_QUERY = 'from:"discover@service.discover.com" subject:"Transaction Alert"'
+    discover_messages = [get_message(message_id['id'], service) for message_id in get_message_ids_by_query(DISCOVER_QUERY, service)]
+
+    for discover_message in discover_messages:
+        message_dict = discover_message_to_dict(discover_message)
+        write_dict_list(csv_filepath, [message_dict])
+        add_labels_to_message(discover_message['id'], [labels_dict['Auto-Finances/Recorded'], labels_dict['Auto-Finances/Transaction/Discover']], service)
+        remove_labels_from_message(discover_message['id'], [labels_dict['INBOX'], labels_dict['UNREAD']], service)
+
 if __name__ == '__main__':
     service = get_service()
     labels_dict = get_labels_dict(service)
@@ -27,3 +38,4 @@ if __name__ == '__main__':
     scan_record_update_chase_transactions(service, csv_filepath, labels_dict)
 
     # TODO: write transactions/discover.py for parsing and extracting the necessary information from my discover transactions
+    scan_record_update_discover_transactions(service, csv_filepath, labels_dict)
