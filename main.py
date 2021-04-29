@@ -37,5 +37,4 @@ if __name__ == '__main__':
 
     scan_record_update_chase_transactions(service, csv_filepath, labels_dict)
 
-    # TODO: write transactions/discover.py for parsing and extracting the necessary information from my discover transactions
     scan_record_update_discover_transactions(service, csv_filepath, labels_dict)
