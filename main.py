@@ -20,7 +20,7 @@ def scan_record_update_chase_transactions(service, csv_filepath, labels_dict):
         print("INBOX & UNREAD labels removed")
 
 def scan_record_update_discover_transactions(service, csv_filepath, labels_dict):
-    DISCOVER_QUERY = 'from:"discover@service.discover.com" subject:"Transaction Alert"'
+    DISCOVER_QUERY = 'from:"discover@service.discover.com" subject:"Transaction Alert" label:"INBOX" label:"UNREAD"'
     discover_messages = [get_message(message_id['id'], service) for message_id in get_message_ids_by_query(DISCOVER_QUERY, service)]
 
     for discover_message in discover_messages:
