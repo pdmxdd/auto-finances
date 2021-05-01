@@ -1,3 +1,4 @@
+from utils.aws import upload_file_to_bucket
 from transactions.discover import discover_message_to_dict
 from utils.csv import write_dict_list
 from transactions.chase import chase_message_to_dict
@@ -38,3 +39,7 @@ if __name__ == '__main__':
     scan_record_update_chase_transactions(service, csv_filepath, labels_dict)
 
     scan_record_update_discover_transactions(service, csv_filepath, labels_dict)
+
+    bucket_name = 'auto-finances'
+
+    upload_file_to_bucket(bucket_name, csv_filepath)
